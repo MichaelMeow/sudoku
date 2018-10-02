@@ -1,6 +1,5 @@
 export function Sudoku(puzzleNumber) {
   this.array = [];
-  this.coordinateArray = [];
   this.number = puzzleNumber;
 }
 
@@ -12,7 +11,6 @@ Sudoku.prototype.createRandom = function(){
   for (var i = 0; i < 9; i++) {
     shuffle(rowArray);
     for (var j = 0; j < 9; j++) {
-      this.coordinateArray.push([i, j, rowArray[j]]);
       this.array.push(rowArray[j]);
     }
   }
@@ -37,39 +35,47 @@ Sudoku.prototype.checkRow = function() {
   return true;
 };
 
-Sudoku.prototype.checkColumn = function(column) {
+Sudoku.prototype.checkColumn = function() {
   var simpleArray = this.array;
   console.log(simpleArray);
-  var counterArray = [0,0,0,0,0,0,0,0,0,0];
-  for (var i= (column-1); i <= (71+column); i += 9) {
-    var checkCounterNumber = simpleArray[i];
-    if (counterArray[checkCounterNumber] == 0){
+  for (var j = 1; j < 10; j++) {
+    var counterArray = [0,0,0,0,0,0,0,0,0,0];
+    for (var i= (j-1); i <= (71+j); i += 9) {
+      var checkCounterNumber = simpleArray[i];
       counterArray[checkCounterNumber] ++;
-    } else {
-      counterArray[checkCounterNumber] ++;
-      var k = 0;
-      while(counterArray[checkCounterNumber] == 2 && k < 9-column){
-        if (counterArray[simpleArray[i+k]] == 0){
-          counterArray[checkCounterNumber] --;
-          var swapNumber = simpleArray[i];
-          simpleArray[i] = simpleArray[i+k];
-          simpleArray[i+k] =  swapNumber;
-          counterArray[simpleArray[i]] ++;
+    }
+    for (i = (j-1); i <= (71+j); i += 9) {
+      checkCounterNumber = simpleArray[i];
+      if (counterArray[checkCounterNumber] > 1) {
+        var k = 0;
+        var counterVariable = counterArray[checkCounterNumber];
+        while(counterArray[checkCounterNumber] == counterVariable && k < 9-j){
+          if (counterArray[simpleArray[i+k]] == 0){
+            counterArray[checkCounterNumber] --;
+            var swapNumber = simpleArray[i];
+            simpleArray[i] = simpleArray[i+k];
+            simpleArray[i+k] =  swapNumber;
+            counterArray[simpleArray[i]] ++;
+          }
+          k++;
         }
-        k++;
       }
     }
   }
-
+  console.log(this.testColumn());
 };
-Sudoku.prototype.testColumn = function(column) {
+
+
+Sudoku.prototype.testColumn = function() {
   var simpleArray = this.array;
-  var counterArray = [0,0,0,0,0,0,0,0,0,0];
-  for (var i= (column-1); i <= (71+column); i += 9) {
-    var checkCounterNumber = simpleArray[i];
-    counterArray[checkCounterNumber] ++;
-    if (counterArray[checkCounterNumber] == 2) {
-      return false;
+  for (var j = 1; j < 10; j++) {
+    var counterArray = [0,0,0,0,0,0,0,0,0,0];
+    for (var i= (j-1); i <= (71+j); i += 9) {
+      var checkCounterNumber = simpleArray[i];
+      counterArray[checkCounterNumber] ++;
+      if (counterArray[checkCounterNumber] == 2) {
+        return false;
+      }
     }
   }
   return true;

@@ -19,10 +19,10 @@ describe('Sudoku', function() {
     expect(randomSudoku.checkRow()).toEqual(true);
   })
 
-  it('should test where the first Sudoku column has only one 1', function () {
+  it('should test where all Sudoku columns have only one 1-9', function () {
     expect(randomSudoku.testColumn()).toEqual(true);
   })
 
-  
+
 
 })
