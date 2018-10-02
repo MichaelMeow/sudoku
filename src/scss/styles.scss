@@ -1,2 +1,28 @@
 
 @import "~bootstrap/scss/bootstrap";
+
+* {
+  margin: 0 0;
+}
+
+.sudoku-table {
+  width: 400px;
+  height: 400px;
+  display: grid;
+  grid-template: repeat(9, 1fr) / repeat(9, 1fr);
+  align-items: center;
+  justify-content: center;
+  background-color: grey;
+  grid-gap: 2px;
+  padding: 2px;
+  margin: 20px auto;
+}
+
+.numberBox {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  font-weight: 500;
+}
